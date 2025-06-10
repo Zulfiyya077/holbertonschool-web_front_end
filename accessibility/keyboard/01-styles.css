@@ -463,6 +463,18 @@ ul.row {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+/* Card WORK section */
+.card-work .card-title a {
+  opacity: 0; /* Başlanğıcda keçid mətnini gizlət */
+}
+.card-work .card-title a:focus,
+.card-work:hover .card-title a {
+  opacity: 1; /* Hover/focus zamanı keçid mətnini görünən et */
+  height: 100%; /* Bütün kartı kliklənə bilən et */
+  background-color: rgba(0, 0, 0, 0.7); /* Fon rəngi əlavə et */
+}
+
+
 /* Card SERVICES
    ============================= */
 

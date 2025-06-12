@@ -202,21 +202,11 @@ ul.row {
   width: 50%;
 }
 
-/* Header Container - YENİ */
-/* ============================= */
-
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 /* Navbar
     ============================= */
 
 .navbar-menu {
-  /* DÜZƏLTMƏ: float silindi, flexbox istifadə olunur */
-  display: flex;
+  float: right;
 }
 
 .nav {
@@ -224,8 +214,6 @@ ul.row {
   padding: 0;
   list-style: none;
   text-align: center;
-  /* YENİ: nav flexbox */
-  display: flex;
 }
 
 .nav .nav-item {

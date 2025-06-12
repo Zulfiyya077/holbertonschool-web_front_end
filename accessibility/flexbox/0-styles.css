@@ -186,13 +186,11 @@ ul.row {
   list-style: none;
 }
 
-/* DÜZƏLTMƏ: row flexbox sistemi */
 .row {
   display: flex;
 }
 
 [class*='col-'] {
-  /* DÜZƏLTMƏ: float silindi */
   padding: 0.5rem;
 }
 

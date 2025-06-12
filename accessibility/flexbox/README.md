@@ -33,7 +33,3 @@ A comprehensive project to master CSS Flexbox properties and create modern, resp
 - Use only Flexbox for layouts
 - Maintain responsive design
 - Follow modern CSS practices
-
-## Author
-
-Holberton School Student

@@ -211,7 +211,11 @@ a:active {
   text-transform: uppercase;
 }
 
+
 .hero-homepage {
+  background-color: var(--color-dark-grey);
+  background-position: 75% 0;
+  background-repeat: no-repeat;
   background-size: 90rem auto;
 }
 

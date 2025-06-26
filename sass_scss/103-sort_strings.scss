@@ -1,5 +1,7 @@
 @import '103-sort_list';
 
+@debug "Original list: #{$list_to_sort}";
+
 @function sort-list($list) {
   @if length($list) <= 1 {
     @return $list;

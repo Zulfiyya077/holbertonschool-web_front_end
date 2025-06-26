@@ -1,61 +1,61 @@
 @import '103-sort_list';
 
-@function sort-list($list) {
-  $result: ();
-  $temp: $list;
+@function simple-sort($items) {
+  $sorted: ();
+  $remaining: $items;
   
-  @while length($temp) > 0 {
-    $min: nth($temp, 1);
-    $min-pos: 1;
+  @while length($remaining) > 0 {
+    $smallest: nth($remaining, 1);
+    $pos: 1;
     
-    @if length($temp) > 1 {
-      @for $i from 2 through length($temp) {
-        @if str-less-than(nth($temp, $i), $min) {
-          $min: nth($temp, $i);
-          $min-pos: $i;
-        }
+    @for $i from 1 through length($remaining) {
+      $current: nth($remaining, $i);
+      @if compare($current, $smallest) {
+        $smallest: $current;
+        $pos: $i;
       }
     }
     
-    $result: append($result, $min);
-    $new-temp: ();
+    $sorted: append($sorted, $smallest);
+    $new-remaining: ();
     
-    @for $i from 1 through length($temp) {
-      @if $i != $min-pos {
-        $new-temp: append($new-temp, nth($temp, $i));
+    @for $j from 1 through length($remaining) {
+      @if $j != $pos {
+        $new-remaining: append($new-remaining, nth($remaining, $j));
       }
     }
     
-    $temp: $new-temp;
+    $remaining: $new-remaining;
   }
   
-  @return $result;
+  @return $sorted;
 }
 
-@function str-less-than($a, $b) {
-  $str-a: to-lower-case(inspect($a));
-  $str-b: to-lower-case(inspect($b));
+@function compare($a, $b) {
+  $word1: to-lower-case(#{$a});
+  $word2: to-lower-case(#{$b});
   
-  $len-a: str-length($str-a);
-  $len-b: str-length($str-b);
-  $min-len: if($len-a < $len-b, $len-a, $len-b);
+  $len1: str-length($word1);
+  $len2: str-length($word2);
+  $max: if($len1 > $len2, $len1, $len2);
   
-  @for $i from 1 through $min-len {
-    $char-a: str-slice($str-a, $i, $i);
-    $char-b: str-slice($str-b, $i, $i);
+  @for $i from 1 through $max {
+    $char1: if($i <= $len1, str-slice($word1, $i, $i), "");
+    $char2: if($i <= $len2, str-slice($word2, $i, $i), "");
     
-    @if $char-a != $char-b {
-      @return char-value($char-a) < char-value($char-b);
+    @if $char1 != $char2 {
+      @return get-order($char1) < get-order($char2);
     }
   }
   
-  @return $len-a < $len-b;
+  @return $len1 < $len2;
 }
 
-@function char-value($char) {
-  $alphabet: "abcdefghijklmnopqrstuvwxyz";
-  $pos: str-index($alphabet, $char);
-  @return if($pos, $pos, 999);
+@function get-order($c) {
+  @if $c == "" { @return 0; }
+  $abc: "abcdefghijklmnopqrstuvwxyz";
+  $index: str-index($abc, $c);
+  @return if($index, $index, 999);
 }
 
-@debug sort-list($list_to_sort);
+@debug simple-sort($list_to_sort);

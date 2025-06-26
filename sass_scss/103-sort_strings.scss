@@ -1,0 +1,65 @@
+@import '103-sort_list';
+
+@function sort-list($list) {
+  $length: length($list);
+  
+  @for $i from 1 through $length {
+    @for $j from 1 through ($length - $i) {
+      $current: nth($list, $j);
+      $next: nth($list, $j + 1);
+      
+      @if str-compare($current, $next) > 0 {
+        $list: set-nth($list, $j, $next);
+        $list: set-nth($list, $j + 1, $current);
+      }
+    }
+  }
+  
+  @return $list;
+}
+
+@function str-compare($str1, $str2) {
+  $str1: to-lower-case($str1);
+  $str2: to-lower-case($str2);
+  
+  $chars1: str-split($str1);
+  $chars2: str-split($str2);
+  
+  $min-length: min(length($chars1), length($chars2));
+  
+  @for $i from 1 through $min-length {
+    $char1: nth($chars1, $i);
+    $char2: nth($chars2, $i);
+    
+    @if $char1 != $char2 {
+      @return char-code($char1) - char-code($char2);
+    }
+  }
+  
+  @return length($chars1) - length($chars2);
+}
+
+@function str-split($string) {
+  $chars: ();
+  $length: str-length($string);
+  
+  @for $i from 1 through $length {
+    $chars: append($chars, str-slice($string, $i, $i));
+  }
+  
+  @return $chars;
+}
+
+@function char-code($char) {
+  $chars: "abcdefghijklmnopqrstuvwxyz";
+  $index: str-index($chars, $char);
+  
+  @if $index {
+    @return $index + 96;
+  }
+  
+  @return 0;
+}
+
+$sorted-list: sort-list($list_to_sort);
+@debug $sorted-list;

@@ -1,68 +1,62 @@
 @import '103-sort_list';
 
-@debug "Original list: #{$list_to_sort}";
-
 @function sort-list($list) {
-  @if length($list) <= 1 {
-    @return $list;
-  }
-  
   $result: ();
-  $temp-list: $list;
+  $temp: $list;
   
-  @while length($temp-list) > 0 {
-    $min-item: nth($temp-list, 1);
-    $min-index: 1;
+  @while length($temp) > 0 {
+    $min: nth($temp, 1);
+    $min-pos: 1;
     
-    @for $i from 2 through length($temp-list) {
-      $current-item: nth($temp-list, $i);
-      @if is-before($current-item, $min-item) {
-        $min-item: $current-item;
-        $min-index: $i;
+    @if length($temp) > 1 {
+      @for $i from 2 through length($temp) {
+        @if str-less-than(nth($temp, $i), $min) {
+          $min: nth($temp, $i);
+          $min-pos: $i;
+        }
       }
     }
     
-    $result: append($result, $min-item);
-    $new-list: ();
+    $result: append($result, $min);
+    $new-temp: ();
     
-    @for $j from 1 through length($temp-list) {
-      @if $j != $min-index {
-        $new-list: append($new-list, nth($temp-list, $j));
+    @for $i from 1 through length($temp) {
+      @if $i != $min-pos {
+        $new-temp: append($new-temp, nth($temp, $i));
       }
     }
     
-    $temp-list: $new-list;
+    $temp: $new-temp;
   }
   
   @return $result;
 }
 
-@function is-before($word1, $word2) {
-  $w1: to-lower-case($word1 + '');
-  $w2: to-lower-case($word2 + '');
+@function str-less-than($a, $b) {
+  $str-a: to-lower-case(inspect($a));
+  $str-b: to-lower-case(inspect($b));
   
-  $max-length: if(str-length($w1) > str-length($w2), str-length($w1), str-length($w2));
+  $len-a: str-length($str-a);
+  $len-b: str-length($str-b);
+  $min-len: if($len-a < $len-b, $len-a, $len-b);
   
-  @for $pos from 1 through $max-length {
-    $c1: if($pos <= str-length($w1), str-slice($w1, $pos, $pos), '');
-    $c2: if($pos <= str-length($w2), str-slice($w2, $pos, $pos), '');
+  @for $i from 1 through $min-len {
+    $char-a: str-slice($str-a, $i, $i);
+    $char-b: str-slice($str-b, $i, $i);
     
-    @if $c1 != $c2 {
-      @return get-char-order($c1) < get-char-order($c2);
+    @if $char-a != $char-b {
+      @return char-value($char-a) < char-value($char-b);
     }
   }
   
-  @return str-length($w1) < str-length($w2);
+  @return $len-a < $len-b;
 }
 
-@function get-char-order($char) {
-  @if $char == '' {
-    @return 0;
-  }
-  
-  $letters: 'abcdefghijklmnopqrstuvwxyz';
-  $position: str-index($letters, $char);
-  @return if($position, $position, 999);
+@function char-value($char) {
+  $alphabet: "abcdefghijklmnopqrstuvwxyz";
+  $pos: str-index($alphabet, $char);
+  @return if($pos, $pos, 999);
 }
 
-@debug sort-list($list_to_sort);
+$sorted: sort-list($list_to_sort);
+@debug $sorted;

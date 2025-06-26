@@ -58,5 +58,4 @@
   @return if($pos, $pos, 999);
 }
 
-$sorted: sort-list($list_to_sort);
-@debug $sorted;
+@debug sort-list($list_to_sort);

@@ -1,62 +1,61 @@
 @import '103-sort_list';
 
-@function sort-list($list) {
-  $sorted: ();
+@function sort-strings($list) {
+  $result: ();
+  $remaining: $list;
   
-  @while length($list) > 0 {
-    $min: nth($list, 1);
-    $min-index: 1;
+  @while length($remaining) > 0 {
+    $smallest: nth($remaining, 1);
+    $smallest-index: 1;
     
-    @for $i from 2 through length($list) {
-      $current: nth($list, $i);
-      @if compare-strings($current, $min) < 0 {
-        $min: $current;
-        $min-index: $i;
+    @for $i from 2 through length($remaining) {
+      $current: nth($remaining, $i);
+      @if alphabetical-compare($current, $smallest) {
+        $smallest: $current;
+        $smallest-index: $i;
       }
     }
     
-    $sorted: append($sorted, $min);
-    $new-list: ();
+    $result: append($result, $smallest);
+    $new-remaining: ();
     
-    @for $i from 1 through length($list) {
-      @if $i != $min-index {
-        $new-list: append($new-list, nth($list, $i));
+    @for $i from 1 through length($remaining) {
+      @if $i != $smallest-index {
+        $new-remaining: append($new-remaining, nth($remaining, $i));
       }
     }
     
-    $list: $new-list;
+    $remaining: $new-remaining;
   }
   
-  @return $sorted;
+  @return $result;
 }
 
-@function compare-strings($str1, $str2) {
-  $str1: to-lower-case($str1 + "");
-  $str2: to-lower-case($str2 + "");
+@function alphabetical-compare($str1, $str2) {
+  $s1: to-lower-case(#{$str1});
+  $s2: to-lower-case(#{$str2});
   
-  $len1: str-length($str1);
-  $len2: str-length($str2);
-  $min-len: if($len1 < $len2, $len1, $len2);
+  $len1: str-length($s1);
+  $len2: str-length($s2);
+  $max-len: if($len1 > $len2, $len1, $len2);
   
-  @for $i from 1 through $min-len {
-    $char1: str-slice($str1, $i, $i);
-    $char2: str-slice($str2, $i, $i);
+  @for $i from 1 through $max-len {
+    $char1: if($i <= $len1, str-slice($s1, $i, $i), "");
+    $char2: if($i <= $len2, str-slice($s2, $i, $i), "");
     
     @if $char1 != $char2 {
-      $code1: char-to-number($char1);
-      $code2: char-to-number($char2);
-      @return $code1 - $code2;
+      @return get-char-value($char1) < get-char-value($char2);
     }
   }
   
-  @return $len1 - $len2;
+  @return $len1 < $len2;
 }
 
-@function char-to-number($char) {
-  $chars: "abcdefghijklmnopqrstuvwxyz";
-  $index: str-index($chars, $char);
+@function get-char-value($char) {
+  $alphabet: "abcdefghijklmnopqrstuvwxyz";
+  $index: str-index($alphabet, $char);
   @return if($index, $index, 999);
 }
 
-$sorted-list: sort-list($list_to_sort);
-@debug $sorted-list;
+$sorted: sort-strings($list_to_sort);
+@debug $sorted;

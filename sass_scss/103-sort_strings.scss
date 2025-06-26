@@ -1,64 +1,61 @@
 @import '103-sort_list';
 
 @function sort-list($list) {
-  $length: length($list);
+  $sorted: ();
   
-  @for $i from 1 through $length {
-    @for $j from 1 through ($length - $i) {
-      $current: nth($list, $j);
-      $next: nth($list, $j + 1);
-      
-      @if str-compare($current, $next) > 0 {
-        $list: set-nth($list, $j, $next);
-        $list: set-nth($list, $j + 1, $current);
+  @while length($list) > 0 {
+    $min: nth($list, 1);
+    $min-index: 1;
+    
+    @for $i from 2 through length($list) {
+      $current: nth($list, $i);
+      @if compare-strings($current, $min) < 0 {
+        $min: $current;
+        $min-index: $i;
       }
     }
+    
+    $sorted: append($sorted, $min);
+    $new-list: ();
+    
+    @for $i from 1 through length($list) {
+      @if $i != $min-index {
+        $new-list: append($new-list, nth($list, $i));
+      }
+    }
+    
+    $list: $new-list;
   }
   
-  @return $list;
+  @return $sorted;
 }
 
-@function str-compare($str1, $str2) {
-  $str1: to-lower-case($str1);
-  $str2: to-lower-case($str2);
+@function compare-strings($str1, $str2) {
+  $str1: to-lower-case($str1 + "");
+  $str2: to-lower-case($str2 + "");
   
-  $chars1: str-split($str1);
-  $chars2: str-split($str2);
+  $len1: str-length($str1);
+  $len2: str-length($str2);
+  $min-len: if($len1 < $len2, $len1, $len2);
   
-  $min-length: min(length($chars1), length($chars2));
-  
-  @for $i from 1 through $min-length {
-    $char1: nth($chars1, $i);
-    $char2: nth($chars2, $i);
+  @for $i from 1 through $min-len {
+    $char1: str-slice($str1, $i, $i);
+    $char2: str-slice($str2, $i, $i);
     
     @if $char1 != $char2 {
-      @return char-code($char1) - char-code($char2);
+      $code1: char-to-number($char1);
+      $code2: char-to-number($char2);
+      @return $code1 - $code2;
     }
   }
   
-  @return length($chars1) - length($chars2);
+  @return $len1 - $len2;
 }
 
-@function str-split($string) {
-  $chars: ();
-  $length: str-length($string);
-  
-  @for $i from 1 through $length {
-    $chars: append($chars, str-slice($string, $i, $i));
-  }
-  
-  @return $chars;
-}
-
-@function char-code($char) {
+@function char-to-number($char) {
   $chars: "abcdefghijklmnopqrstuvwxyz";
   $index: str-index($chars, $char);
-  
-  @if $index {
-    @return $index + 96;
-  }
-  
-  @return 0;
+  @return if($index, $index, 999);
 }
 
 $sorted-list: sort-list($list_to_sort);

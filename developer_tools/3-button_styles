@@ -50,3 +50,4 @@ vertical-align: middle;
 width: 218.863px;
 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 border-color: #f8f9fa;
+background-color: transparent;

@@ -18,3 +18,4 @@ transition: 0.15s ease-in-out;
 user-select: none;
 vertical-align: middle;
 width: 13.679rem;
+border: 0.125rem solid transparent;

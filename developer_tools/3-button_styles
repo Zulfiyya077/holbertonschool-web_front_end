@@ -1,4 +1,4 @@
-background-color: rgba(0, 0, 0, 0);
+$ background-color: rgba(0, 0, 0, 0);
 border-radius: 8px;
 border: 1.6px solid rgb(248, 249, 250);
 box-sizing: border-box;
@@ -17,3 +17,4 @@ transition: 0.15s ease-in-out;
 user-select: none;
 vertical-align: middle;
 width: 218.863px;
+$

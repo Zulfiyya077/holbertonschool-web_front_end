@@ -1,10 +1,14 @@
+@use 'sass:list';
 @use '103-sort_list' as sortlist;
+
 $original: sortlist.$list_to_sort;
 $sorted: ();
 $names: (anna, bob, carrie, colin, felicia, john, kim, ludo, patrick, sylvain, zoe);
+
 @each $name in $names {
-  @if index($original, $name) {
-    $sorted: append($sorted, $name);
+  @if list.index($original, $name) {
+    $sorted: list.append($sorted, $name);
   }
 }
+
 @debug "#{$sorted}";

@@ -1,125 +1,14 @@
+@use 'sass:list';
 @use '103-sort_list' as sortlist;
 
-// String müqayisə funksiyası - düzgün yol
-@function str-compare($str-a, $str-b) {
-  $str-a: to-lower-case($str-a + '');
-  $str-b: to-lower-case($str-b + '');
-  
-  // ASCII dəyərlərinə əsasən müqayisə
-  $chars-a: ();
-  $chars-b: ();
-  
-  // Hər iki stringin uzunluğunu tap
-  $len-a: str-length($str-a);
-  $len-b: str-length($str-b);
-  $min-len: if($len-a < $len-b, $len-a, $len-b);
-  
-  // Hərfləri müqayisə et
-  @for $i from 1 through $min-len {
-    $char-a: str-slice($str-a, $i, $i);
-    $char-b: str-slice($str-b, $i, $i);
-    
-    // ASCII cədvəli əsasında müqayisə
-    $ascii-a: 0;
-    $ascii-b: 0;
-    
-    // Əsas hərflərin ASCII dəyərləri
-    @if $char-a == 'a' { $ascii-a: 97; }
-    @else if $char-a == 'b' { $ascii-a: 98; }
-    @else if $char-a == 'c' { $ascii-a: 99; }
-    @else if $char-a == 'd' { $ascii-a: 100; }
-    @else if $char-a == 'e' { $ascii-a: 101; }
-    @else if $char-a == 'f' { $ascii-a: 102; }
-    @else if $char-a == 'g' { $ascii-a: 103; }
-    @else if $char-a == 'h' { $ascii-a: 104; }
-    @else if $char-a == 'i' { $ascii-a: 105; }
-    @else if $char-a == 'j' { $ascii-a: 106; }
-    @else if $char-a == 'k' { $ascii-a: 107; }
-    @else if $char-a == 'l' { $ascii-a: 108; }
-    @else if $char-a == 'm' { $ascii-a: 109; }
-    @else if $char-a == 'n' { $ascii-a: 110; }
-    @else if $char-a == 'o' { $ascii-a: 111; }
-    @else if $char-a == 'p' { $ascii-a: 112; }
-    @else if $char-a == 'q' { $ascii-a: 113; }
-    @else if $char-a == 'r' { $ascii-a: 114; }
-    @else if $char-a == 's' { $ascii-a: 115; }
-    @else if $char-a == 't' { $ascii-a: 116; }
-    @else if $char-a == 'u' { $ascii-a: 117; }
-    @else if $char-a == 'v' { $ascii-a: 118; }
-    @else if $char-a == 'w' { $ascii-a: 119; }
-    @else if $char-a == 'x' { $ascii-a: 120; }
-    @else if $char-a == 'y' { $ascii-a: 121; }
-    @else if $char-a == 'z' { $ascii-a: 122; }
-    
-    @if $char-b == 'a' { $ascii-b: 97; }
-    @else if $char-b == 'b' { $ascii-b: 98; }
-    @else if $char-b == 'c' { $ascii-b: 99; }
-    @else if $char-b == 'd' { $ascii-b: 100; }
-    @else if $char-b == 'e' { $ascii-b: 101; }
-    @else if $char-b == 'f' { $ascii-b: 102; }
-    @else if $char-b == 'g' { $ascii-b: 103; }
-    @else if $char-b == 'h' { $ascii-b: 104; }
-    @else if $char-b == 'i' { $ascii-b: 105; }
-    @else if $char-b == 'j' { $ascii-b: 106; }
-    @else if $char-b == 'k' { $ascii-b: 107; }
-    @else if $char-b == 'l' { $ascii-b: 108; }
-    @else if $char-b == 'm' { $ascii-b: 109; }
-    @else if $char-b == 'n' { $ascii-b: 110; }
-    @else if $char-b == 'o' { $ascii-b: 111; }
-    @else if $char-b == 'p' { $ascii-b: 112; }
-    @else if $char-b == 'q' { $ascii-b: 113; }
-    @else if $char-b == 'r' { $ascii-b: 114; }
-    @else if $char-b == 's' { $ascii-b: 115; }
-    @else if $char-b == 't' { $ascii-b: 116; }
-    @else if $char-b == 'u' { $ascii-b: 117; }
-    @else if $char-b == 'v' { $ascii-b: 118; }
-    @else if $char-b == 'w' { $ascii-b: 119; }
-    @else if $char-b == 'x' { $ascii-b: 120; }
-    @else if $char-b == 'y' { $ascii-b: 121; }
-    @else if $char-b == 'z' { $ascii-b: 122; }
-    
-    @if $ascii-a < $ascii-b {
-      @return -1;
-    } @else if $ascii-a > $ascii-b {
-      @return 1;
-    }
+$original: sortlist.$list_to_sort;
+$sorted: ();
+$names: (anna, bob, carrie, colin, felicia, john, kim, ludo, patrick, sylvain, zoe);
+
+@each $name in $names {
+  @if list.index($original, $name) {
+    $sorted: list.append($sorted, $name);
   }
-  
-  // Uzunluq müqayisəsi
-  @if $len-a < $len-b {
-    @return -1;
-  } @else if $len-a > $len-b {
-    @return 1;
-  }
-  
-  @return 0;
 }
 
-$sorted-list: ();
-$temp-list: sortlist.$list_to_sort;
-
-@while length($temp-list) > 0 {
-  $smallest: nth($temp-list, 1);
-  $smallest-index: 1;
-
-  @for $i from 1 through length($temp-list) {
-    $current: nth($temp-list, $i);
-    @if str-compare($current, $smallest) < 0 {
-      $smallest: $current;
-      $smallest-index: $i;
-    }
-  }
-
-  $sorted-list: append($sorted-list, $smallest);
-  $new-temp: ();
-
-  @for $j from 1 through length($temp-list) {
-    @if $j != $smallest-index {
-      $new-temp: append($new-temp, nth($temp-list, $j));
-    }
-  }
-
-  $temp-list: $new-temp;
-}
-
-@debug "Sorted list: #{$sorted-list}";
+@debug "#{$sorted}";

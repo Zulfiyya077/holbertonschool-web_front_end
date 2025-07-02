@@ -1,0 +1,61 @@
+@use '103-sort_list' as sortlist;
+
+@function simple-sort($items) {
+  $sorted: ();
+  $remaining: $items;
+  
+  @while length($remaining) > 0 {
+    $smallest: nth($remaining, 1);
+    $pos: 1;
+    
+    @for $i from 1 through length($remaining) {
+      $current: nth($remaining, $i);
+      @if compare($current, $smallest) {
+        $smallest: $current;
+        $pos: $i;
+      }
+    }
+    
+    $sorted: append($sorted, $smallest);
+    $new-remaining: ();
+    
+    @for $j from 1 through length($remaining) {
+      @if $j != $pos {
+        $new-remaining: append($new-remaining, nth($remaining, $j));
+      }
+    }
+    
+    $remaining: $new-remaining;
+  }
+  
+  @return $sorted;
+}
+
+@function compare($a, $b) {
+  $word1: to-lower-case(#{$a});
+  $word2: to-lower-case(#{$b});
+  
+  $len1: str-length($word1);
+  $len2: str-length($word2);
+  $max: if($len1 > $len2, $len1, $len2);
+  
+  @for $i from 1 through $max {
+    $char1: if($i <= $len1, str-slice($word1, $i, $i), "");
+    $char2: if($i <= $len2, str-slice($word2, $i, $i), "");
+    
+    @if $char1 != $char2 {
+      @return get-order($char1) < get-order($char2);
+    }
+  }
+  
+  @return $len1 < $len2;
+}
+
+@function get-order($c) {
+  @if $c == "" { @return 0; }
+  $abc: "abcdefghijklmnopqrstuvwxyz";
+  $index: str-index($abc, $c);
+  @return if($index, $index, 999);
+}
+
+@debug simple-sort(sortlist.$list_to_sort);

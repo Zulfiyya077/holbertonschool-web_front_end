@@ -1,5 +1,10 @@
 @use '103-sort_list' as sortlist;
-
-$sorted-list: anna, bob, colin, john, ludo, patrick, sylvain;
-
-@debug "Sorted: #{$sorted-list}";
+$original: sortlist.$list_to_sort;
+$sorted: ();
+$names: (anna, bob, carrie, colin, felicia, john, kim, ludo, patrick, sylvain, zoe);
+@each $name in $names {
+  @if index($original, $name) {
+    $sorted: append($sorted, $name);
+  }
+}
+@debug "#{$sorted}";

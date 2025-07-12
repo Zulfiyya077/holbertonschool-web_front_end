@@ -1,0 +1,27 @@
+{
+  "name": "holbertonschool-web_front_end",
+  "version": "1.0.0",
+  "description": "This project consists of 11 progressive tasks to fix web accessibility issues and achieve WCAG compliance. Each task addresses specific accessibility problems in a website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch style.scss:style.css",
+    "sass-build": "sass style.scss style.css",
+    "sass-compressed": "sass style.scss style.css --style compressed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zulfiyya077/holbertonschool-web_front_end.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Zulfiyya077/holbertonschool-web_front_end/issues"
+  },
+  "homepage": "https://github.com/Zulfiyya077/holbertonschool-web_front_end#readme",
+  "devDependencies": {
+    "sass": "^1.89.2"
+  }
+}

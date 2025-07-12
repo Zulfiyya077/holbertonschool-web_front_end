@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__container">
+            <a href="#" class="header__logo">Logo</a>
+            
+            <nav class="header__nav">
+                <ul class="header__nav-list">
+                    <li><a href="#home" class="header__nav-link">Home</a></li>
+                    <li><a href="#features" class="header__nav-link">Features</a></li>
+                    <li><a href="#contact" class="header__nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__hamburger" id="hamburger">
+                <span class="header__hamburger-line"></span>
+                <span class="header__hamburger-line"></span>
+                <span class="header__hamburger-line"></span>
+            </div>
+
+            <nav class="header__mobile-nav" id="mobileNav">
+                <ul class="header__mobile-nav-list">
+                    <li class="header__mobile-nav-item">
+                        <a href="#home" class="header__mobile-nav-link">Home</a>
+                    </li>
+                    <li class="header__mobile-nav-item">
+                        <a href="#features" class="header__mobile-nav-link">Features</a>
+                    </li>
+                    <li class="header__mobile-nav-item">
+                        <a href="#contact" class="header__mobile-nav-link">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hero__container">
+                <h1 class="hero__title">Lorem Ipsum Dolor</h1>
+                <p class="hero__description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <a href="#contact" class="hero__cta">Get Started</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <div class="features__container">
+                <h2 class="features__title">Our Features</h2>
+                <div class="features__grid">
+                    <div class="features__card">
+                        <h3 class="features__card-title">Feature One</h3>
+                        <p class="features__card-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                        </p>
+                    </div>
+                    <div class="features__card">
+                        <h3 class="features__card-title">Feature Two</h3>
+                        <p class="features__card-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                        </p>
+                    </div>
+                    <div class="features__card">
+                        <h3 class="features__card-title">Feature Three</h3>
+                        <p class="features__card-description">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact">
+            <div class="contact__container">
+                <h2 class="contact__title">Contact Us</h2>
+                <form class="contact__form" id="contactForm">
+                    <div class="contact__form-group">
+                        <label for="name" class="contact__label">Name</label>
+                        <input type="text" id="name" name="name" class="contact__input" required>
+                    </div>
+                    <div class="contact__form-group">
+                        <label for="email" class="contact__label">Email</label>
+                        <input type="email" id="email" name="email" class="contact__input" required>
+                    </div>
+                    <div class="contact__form-group">
+                        <label for="message" class="contact__label">Message</label>
+                        <textarea id="message" name="message" class="contact__textarea" required></textarea>
+                    </div>
+                    <div class="contact__message" id="contactMessage"></div>
+                    <button type="submit" class="contact__submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__social">
+                <a href="#" class="footer__social-link">Facebook</a>
+                <a href="#" class="footer__social-link">Twitter</a>
+                <a href="#" class="footer__social-link">Instagram</a>
+            </div>
+            <p class="footer__copyright">© 2025 Company Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Task 7</title>
+
+    </head>
+
+    <body>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+                integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+                crossorigin="anonymous"></script>
+
+        <script type="application/javascript">
+            function createSearchForm() {
+                $('body').append(
+                    $('<input>').attr('type', 'text'),
+                    $('<input>').attr('type', 'submit').click(function(e) {
+                        e.preventDefault();
+                        var searchValue = $('input[type="text"]').val();
+                        queryWikipedia(searchValue);
+                    }),
+                    $('<ul>')
+                );
+            }
+
+            function addNewArticle(id, title, snippet) {
+                var listItem = $('<li>').append(
+                    $('<p>').append(
+                        $('<span>').text(id + ' - '),
+                        $('<b>').text(title)
+                    ),
+                    $('<p>').html(snippet)
+                );
+                $('ul').append(listItem);
+            }
+
+            function queryWikipedia(search) {
+                $.get({
+                    url: 'https://en.wikipedia.org/w/api.php',
+                    data: {
+                        action: 'query',
+                        list: 'search',
+                        srsearch: search,
+                        format: 'json',
+                        origin: '*'
+                    },
+                    success: function(data) {
+                        $('ul').empty();
+                        $.each(data.query.search, function(index, result) {
+                            addNewArticle(result.pageid, result.title, result.snippet);
+                        });
+                    }
+                });
+            }
+
+            createSearchForm();
+        </script>
+
+    </body>
+
+</html>

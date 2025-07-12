@@ -23,5 +23,8 @@
   "homepage": "https://github.com/Zulfiyya077/holbertonschool-web_front_end#readme",
   "devDependencies": {
     "sass": "^1.89.2"
+  },
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
   }
 }
